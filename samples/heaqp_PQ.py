@@ -4,14 +4,17 @@ import heapq
 heap = []
 heapq.heappush(heap, item)
 #heapq把列表x转换成堆
-heapq.heapify(x)
+heapq.heapify(x) #最小值放到前面   
 #从可迭代的迭代器中返回最大的n个数，可以指定比较的key
 heapq.nlargest(n, iterable[, key])
 #从可迭代的迭代器中返回最小的n个数，可以指定比较的key
 heapq.nsmallest(n, iterable[, key])
 #从堆中删除元素，返回值是堆中最小或者最大的元素
-heapq.heappop(heap)
-
+heapq.heappop(heap) #返回堆中最小的元素，可以用来给数组排序
+data = [4, 1, 3, 7, 5, 6, 2]
+while data:
+  i = heapq.heappop(data)#每次pop出来数组中最小值
+  heap.append(i)
 #pq, cmp
 # Q.PriorityQueue(); put(x), empty(), get()
 try:
