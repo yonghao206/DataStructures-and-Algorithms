@@ -1,6 +1,7 @@
 # Table of contents
 
-* [BFSDFS](README.md)
+* [Introduction](README.md)
+* [BFSDFS](bfsdfs.md)
 * [DP](dp.md)
 * [README](readme.md)
 
@@ -14,5 +15,6 @@
 * [LinkedList](leetcode_dsa/linkedlist.md)
 * [Tree](leetcode_dsa/tree.md)
 * [BFS/DFS](leetcode_dsa/bfs-dfs.md)
+* [DP](leetcode_dsa/dp.md)
 * [Java\_knowledgePoints](leetcode_dsa/java_knowledgepoints.md)
 
