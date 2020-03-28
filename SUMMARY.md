@@ -14,6 +14,7 @@
 
 * [LinkedList](leetcode_dsa/linkedlist.md)
 * [Tree](leetcode_dsa/tree.md)
+* [Trie](leetcode_dsa/trie.md)
 * [BFS/DFS](leetcode_dsa/bfs-dfs.md)
 * [DP](leetcode_dsa/dp.md)
 * [Java\_knowledgePoints](leetcode_dsa/java_knowledgepoints.md)
