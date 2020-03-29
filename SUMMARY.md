@@ -16,6 +16,7 @@
 * [Binary Search](leetcode_dsa/binary-search.md)
 * [LinkedList](leetcode_dsa/linkedlist.md)
 * [Math](leetcode_dsa/math.md)
+* [Stack/Queue](leetcode_dsa/stack-queue.md)
 * [Tree](leetcode_dsa/tree.md)
 * [Trie](leetcode_dsa/trie.md)
 * [BFS](leetcode_dsa/bfs.md)
