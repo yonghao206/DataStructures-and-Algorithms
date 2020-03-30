@@ -1,9 +1,6 @@
 # Table of contents
 
-* [Introduction](README.md)
-* [BFSDFS](bfsdfs.md)
-* [DP](dp.md)
-* [README](readme.md)
+* [readme.md](README.md)
 
 ## DataBase
 
@@ -23,5 +20,6 @@
 * [BFS](leetcode_dsa/bfs.md)
 * [DFS](leetcode_dsa/bfs-dfs.md)
 * [DP](leetcode_dsa/dp.md)
-* [Java\_knowledgePoints](leetcode_dsa/java_knowledgepoints.md)
+* [Java\_keyConcept](leetcode_dsa/java_knowledgepoints.md)
+* [Python\_keyConcept](leetcode_dsa/python_keyconcept.md)
 
