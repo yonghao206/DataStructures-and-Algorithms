@@ -15,6 +15,7 @@
 * [Pointers](leetcode_dsa/pointers.md)
 * [Binary Search](leetcode_dsa/binary-search.md)
 * [LinkedList](leetcode_dsa/linkedlist.md)
+* [String](leetcode_dsa/string.md)
 * [Math](leetcode_dsa/math.md)
 * [Stack/Queue](leetcode_dsa/stack-queue.md)
 * [Tree](leetcode_dsa/tree.md)
