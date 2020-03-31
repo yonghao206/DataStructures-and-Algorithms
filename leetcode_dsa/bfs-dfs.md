@@ -1,6 +1,97 @@
-# DFS
+# DFS/Backtracking
 
 
+
+### [17. Letter Combinations of a Phone Number](https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/)
+
+Difficulty: **中等**
+
+Given a string containing digits from `2-9` inclusive, return all possible letter combinations that the number could represent.
+
+A mapping of digit to letters \(just like on the telephone buttons\) is given below. Note that 1 does not map to any letters.
+
+![](http://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/200px-Telephone-keypad2.svg.png)
+
+**Example:**
+
+```text
+Input: "23"
+Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+```
+
+**Note:**
+
+Although the above answer is in lexicographical order, your answer could be in any order you want.
+
+**Solution**
+
+Language: **Python3**
+
+```python
+​class Solution: # T:O(2^n) S:O(n)
+# 递归方法的空间复杂度取决于最大深度
+    def letterCombinations(self, digits: str) -> List[str]:
+        if not digits: return []
+        res = []
+        unit = ""
+        self.numMap = ['', '', 'abc', 'def', 'ghi', 'jkl', 'mno', 'pqrs', 'tuv', 'wxyz']
+        self.dfs(res, unit, digits,0)
+        return res 
+    def dfs(self, res, unit, digits,idx):
+        if idx == len(digits):
+            res.append(unit[:])
+            return 
+        for j in self.numMap[int(digits[idx])]:
+            # unit += j
+            self.dfs(res, unit+j, digits, idx+1)
+            # unit = unit[:-1]
+
+
+
+# class Solution: # T:O(2^n) S:O(2^n)
+#     def letterCombinations(self, digits: str) -> List[str]:
+#         numMap = ['', '', 'abc', 'def', 'ghi', 'jkl', 'mno', 'pqrs', 'tuv', 'wxyz']
+#         if digits:
+#             temp = [""] #每一层遍历之前，需要之前的结果，最开始我们设置为""
+#             for i in digits: # "23"
+#                 n = len(temp)
+#                 cur = []
+#                 for k in range(n):
+#                     for j in numMap[int(i)]:
+#                         cur.append(temp[k]+j)
+#                 temp = cur 
+#             return cur
+#         return []
+```
+
+```java
+class Solution {
+
+    String[] keyboard = new String[] {"","","abc", "def", "ghi", "jkl","mno", "pqrs", "tuv","wxyz"};
+
+    public List<String> letterCombinations(String digits) {
+        List<String> result = new ArrayList<>();
+        if(digits.length()==0)return result;
+        StringBuilder sb = new StringBuilder();
+        dfs(digits, 0, sb, result);
+        return result;
+    }
+
+    private void dfs(String digits, int index, StringBuilder sb, List<String> result){
+        if(index == digits.length()){
+            result.add(sb.toString());
+            return;
+        }
+        String letter = keyboard[digits.charAt(index)-'0'];
+        for(int i = 0; i<letter.length(); i++){
+            char c = letter.charAt(i);
+            sb.append(c);
+            dfs(digits, index+1, sb, result);
+            sb.deleteCharAt(sb.length()-1);
+        }
+    }
+}
+```
 
 ### [139. 单词拆分](https://leetcode-cn.com/problems/word-break/)
 

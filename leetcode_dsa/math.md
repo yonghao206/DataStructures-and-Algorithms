@@ -98,3 +98,25 @@ Language: **Python3**
 
 
 
+#### [365. 水壶问题](https://leetcode-cn.com/problems/water-and-jug-problem/)
+
+Difficulty: **该题有新题解时你将收到通知**
+
+该题有新题解时你将收到通知
+
+**Solution**
+
+Language: **Python3**
+
+```python
+​class Solution:
+    def canMeasureWater(self, x: int, y: int, z: int) -> bool:
+        #原理是ax+by=z 求二元一次方程的整数解 有整数解的前提是 x与y的最大公约数 能被z整除
+        # if z == 0: return False 
+        # if x+y<z: return False 
+        # while y != 0:
+        #     x, y = y, x%y 
+        # return z%x == 0
+        return x + y >= z and ( (z == 0 or z == y or z == x ) or z % math.gcd(x,y) == 0 ) 
+```
+

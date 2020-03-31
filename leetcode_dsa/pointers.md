@@ -100,3 +100,80 @@ Language: **Java**
 }
 ```
 
+
+
+### [75. Sort Colors](https://leetcode-cn.com/problems/sort-colors/)
+
+Difficulty: **中等**
+
+Given an array with _n_ objects colored red, white or blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white and blue.
+
+Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.
+
+**Note:** You are not suppose to use the library's sort function for this problem.
+
+**Example:**
+
+```text
+Input: [2,0,2,1,1,0]
+Output: [0,0,1,1,2,2]
+```
+
+**Follow up:**
+
+* A rather straight forward solution is a two-pass algorithm using counting sort.  
+
+  First, iterate the array counting number of 0's, 1's, and 2's, then overwrite array with total number of 0's, then 1's and followed by 2's.
+
+* Could you come up with a one-pass algorithm using only constant space?
+
+**Solution**
+
+Language: **Python3**
+
+```python
+​class Solution:
+    def sortColors(self, nums: List[int]) -> None:
+        """
+        one-pass algorithm 扫描一遍
+        这里所谓的三路快排
+        用zero i two 分别维护0，1，2的区域
+        [:zero-1]前为0， [two+1:]为2，i为遍历指针，当nums[i] == 1是，只是i++,其他为0，2都要swap        """
+        zero = 0
+        i = 0
+        two = len(nums) - 1
+        while i <= two:
+            # 为0，把这个i和zero swap一下，然后 zero,i都++
+            if nums[i] == 0:
+                nums[zero], nums[i] = nums[i], nums[zero]
+                i += 1
+                zero += 1
+            # 为1的时候，i++
+            # 因为我是1的时候都直接++，导致前面i走过的地方都是1，如果遇到了0，直接swap，因为前面都是1，所以交换下来的肯定是1，这样直接i++
+            # 这也是什么在nums[i] == 2的时候，没有i++,只有two--
+            elif nums[i] == 1:#让[zero:i-1]为1
+                i += 1
+            # 为2的时候 i和two swap一下，然后 two--,
+            # 为0的时候有i++,为2的时候没有，二者只需要做一次来确定指针维护
+            elif nums[i] == 2:
+                nums[two], nums[i] = nums[i], nums[two]
+                two -= 1
+        return nums
+
+# class Solution:
+#     def sortColors(self, nums: List[int]) -> None:
+#         if not nums: return 
+#         l, r , i = -1, len(nums), 0 
+#         # 0:[:l], 1:[l+1, i-1]  2:[r:]
+#         while i < r: #这里不用=，因为r时包含在2中的，所以不应该=
+#             if nums[i] == 2:
+#                 r-=1 # 给2腾出来位置，但是i的位置不变，因为你并不知道换了以后是什么数字
+#                 nums[i], nums[r] = nums[r], nums[i]
+#             elif nums[i] == 0:
+#                 l+=1 # 给0腾位置，
+#                 nums[i], nums[l] = nums[l], nums[i]
+#                 i+=1 #这里nums[l]为1，所以交换了以后要++
+#             else:
+#                 i+=1
+```
+

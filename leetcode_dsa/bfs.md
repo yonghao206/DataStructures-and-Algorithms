@@ -109,3 +109,35 @@ class Solution:
 
 ```
 
+```java
+class Solution {
+    public int maxDistance(int[][] grid) {
+        int n = grid.length, m = grid[0].length;
+        Queue<int[]> q = new ArrayDeque<>();
+        int[] dx = {1, -1, 0, 0};
+        int[] dy = {0, 0, 1, -1};
+        for(int i = 0; i<n; i++){
+            for(int j = 0; j < m; j++){
+                if(grid[i][j]==1) q.offer(new int[]{i,j});
+            }
+        }
+        boolean hasOcean = false;
+        int[] p = null;
+        while(!q.isEmpty()){
+            p = q.poll();
+            int x = p[0], y = p[1];
+            for(int i = 0; i < 4; i++){
+                int newx = x+dx[i];
+                int newy = y+dy[i];
+                if (newx<0 || newx>=n || newy<0 || newy>=m || grid[newx][newy]!=0)continue;
+                grid[newx][newy] = grid[x][y] + 1;
+                q.offer(new int[]{newx, newy});
+                hasOcean = true;
+            }
+        }
+        if (!hasOcean)return -1;
+        return grid[p[0]][p[1]]-1;
+    }
+}
+```
+

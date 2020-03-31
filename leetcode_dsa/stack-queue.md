@@ -327,6 +327,95 @@ class MyStack:
 
 
 
+### [227. Basic Calculator II](https://leetcode-cn.com/problems/basic-calculator-ii/)
+
+Difficulty: **中等**
+
+Implement a basic calculator to evaluate a simple expression string.
+
+The expression string contains only **non-negative** integers, `+`, `-`, `*`, `/` operators and empty spaces . The integer division should truncate toward zero.
+
+**Example 1:**
+
+```text
+Input: "3+2*2"
+Output: 7
+```
+
+**Example 2:**
+
+```text
+Input: " 3/2 "
+Output: 1
+```
+
+**Example 3:**
+
+```text
+Input: " 3+5 / 2 "
+Output: 5
+```
+
+**Note:**
+
+* You may assume that the given expression is always valid.
+* **Do not** use the `eval` built-in library function.
+
+**Solution**
+
+Language: **Python3**
+
+```python
+​# class Solution:
+#     def calculate(self, s: str) -> int:
+#         sum, op, part = 0, '+', 0
+#         n = len(s)
+#         p = 0
+#         while p < n:
+#             while p < n and s[p] == ' ':
+#                 p+=1
+#             num = 0
+#             while p < n and '0'<=s[p]<='9':
+#                 num = num*10+ord(s[p])-ord('0')
+#                 p+=1
+#             if op == '+':
+#                 sum += part 
+#                 part = num 
+#             elif op == '-':
+#                 sum += part 
+#                 part = -num
+#             elif op == '*':
+#                 part *= num 
+#             else:
+#                 part =int(part/ num) 
+#             while p < n and s[p] == ' ':
+#                 p+=1
+#             if p < n:
+#                 op = s[p]
+#                 p+=1
+#         return sum+part 
+class Solution:
+    def calculate(self, s: str) -> int:
+        num = 0
+        stk = []
+        op = "+"
+        for i, c in enumerate(s):
+            if c.isnumeric():
+                num = num*10+ int(c)
+            if c in '+-*/' or i == len(s)-1:
+                if op == '+':
+                    stk.append(num)
+                if op == '-':
+                    stk.append(-num)
+                if op == '*':
+                    stk.append(stk.pop()*num)
+                if op == '/':
+                    stk.append(int(stk.pop()/num))
+                op = c 
+                num = 0
+        return sum(stk)
+```
+
 ### [232. Implement Queue using Stacks](https://leetcode-cn.com/problems/implement-queue-using-stacks/)
 
 Difficulty: **简单**
