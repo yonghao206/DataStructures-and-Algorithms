@@ -56,6 +56,122 @@ class Solution {
 }
 ```
 
+
+
+### [23. Merge k Sorted Lists](https://leetcode-cn.com/problems/merge-k-sorted-lists/)
+
+Difficulty: **困难**
+
+Merge _k_ sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
+
+**Example:**
+
+```text
+Input:
+[
+  1->4->5,
+  1->3->4,
+  2->6
+]
+Output: 1->1->2->3->4->4->5->6
+```
+
+**Solution**
+
+Language: **Python3**
+
+```python
+​# # # # heap方法 和 378类似
+class Solution: #T:O(Nlogk)
+    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        # if not lists or not lists[0]: return None 
+        n = len(lists)
+        h = []
+        for i in range(n):
+            # [[]], [[], [1]]
+            if lists[i]: # #把每个链表得第一个加进入，然后heappop出来最小的
+                heapq.heappush(h, (lists[i].val, i))
+                lists[i] = lists[i].next 
+        dummy = ListNode(-1)
+        cur = dummy 
+        while h:
+            val, index = heapq.heappop(h)
+            cur.next = ListNode(val)
+            cur = cur.next 
+            if lists[index]:
+                heapq.heappush(h, (lists[index].val, index))
+                lists[index] = lists[index].next 
+        return dummy.next 
+class Solution: #T:O(Nlogk)
+    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        # if not lists or not lists[0]: return None 
+        minHeap = []
+        for i in range(len(lists)):
+            if lists[i]: #把每个链表得第一个加进入，然后heappop出来最小的
+                heapq.heappush(minHeap, (lists[i].val, i)) #没办法传入list[i]只能是数字？
+        dummy = ListNode(-1)
+        p = dummy 
+        while minHeap:#因为最后会一直添加到结束，所以直接返回即可
+            val, i = heapq.heappop(minHeap)
+            p.next = lists[i]
+            p = p.next #记得指针要往后移动
+            lists[i] = lists[i].next #这个也要移动呀
+            if lists[i]:
+                heapq.heappush(minHeap, (lists[i].val, i))
+        return dummy.next 
+# #T:n:所有节点的个数，k：链表的个数； O(Nlogk)
+# class Solution: #把k个链表进行分治排序，然后写一个two list合并的排一下
+#     def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+#         if not lists: return  # 这里不是把[]返回
+#         n = len(lists)
+#         return self.merge(lists, 0, n-1)
+#     def merge(self, lists, left, right):
+#         if left == right:
+#             return lists[left]
+#         #[0, n-1] => [0, mid] [mid+1, n-1]
+#         # [0, mid] => [0, mid_mid], [mid_mid+1:mid]
+#         # => => [left, right]
+#         # 4个ll[1,2,3,4]
+#         # 
+#         mid = left + right >> 1
+#         l1 = self.merge(lists, left, mid)
+#         l2 = self.merge(lists, mid+1, right)
+#         return self.mergeTwoLists(l1, l2)
+#     def mergeTwoLists(self, l1, l2):
+#         if not l1: return l2 #这里会对[]进行返回
+#         if not l2: return l1 
+#         if l1.val < l2.val:
+#             l1.next = self.mergeTwoLists(l1.next, l2)
+#             return l1 
+#         else:
+#             l2.next = self.mergeTwoLists(l1, l2.next)
+#             return l2
+# class Solution: #T:O(Nlogk) N:average size of linkedlist, k:No. of LL; S:O(logk) 
+#     def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+#         if not lists: return None  
+#         n = len(lists)
+#         if n == 1: return lists[0]
+#         mid = n//2 
+#         left = self.mergeKLists(lists[:mid])
+#         right = self.mergeKLists(lists[mid:])
+#         return self.mergeTwoList(left, right)
+        
+#     def mergeTwoList(self, l1: ListNode, l2:ListNode)->ListNode:
+#         dummy = ListNode(-1)
+#         cur = dummy 
+#         while l1 and l2:
+#             if l1.val > l2.val:
+#                 cur.next = l2 
+#                 l2 = l2.next 
+#             else:
+#                 cur.next = l1
+#                 l1 = l1.next 
+#             cur = cur.next 
+#         if l1: cur.next = l1 
+#         if l2: cur.next = l2        
+#         return dummy.next
+```
+
 ### [148. Sort List](https://leetcode-cn.com/problems/sort-list/)
 
 Difficulty: **中等**

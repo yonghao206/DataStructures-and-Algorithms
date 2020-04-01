@@ -483,3 +483,78 @@ Language: **Python3**
 # param_4 = obj.empty()
 ```
 
+## Monotonic Stack/Queue
+
+
+
+### [31. Next Permutation](https://leetcode-cn.com/problems/next-permutation/)
+
+Difficulty: **中等**
+
+Implement **next permutation**, which rearranges numbers into the lexicographically next greater permutation of numbers.
+
+If such arrangement is not possible, it must rearrange it as the lowest possible order \(ie, sorted in ascending order\).
+
+The replacement must be and use only constant extra memory.
+
+Here are some examples. Inputs are in the left-hand column and its corresponding outputs are in the right-hand column.
+
+`1,2,3` → `1,3,2`  
+`3,2,1` → `1,2,3`  
+`1,1,5` → `1,5,1`
+
+**Solution**
+
+Language: **Python3**
+
+```python
+​class Solution:
+    def nextPermutation(self, nums: List[int]) -> None:
+          #[2,1,8,4,2,1]
+          # 先找到从右往左的第一个不单调递增的数字,然后让她与从右往左第一个比它大的数字交换,再把它右边反转一下就好了
+        if not nums: return []
+        n = len(nums)
+        p = n-2
+        while p>=0 and nums[p]>=nums[p+1]:
+            p-=1
+        if p>=0: # 不是一直单调递减的,并且p指向了单调最大值的左边
+            i = n-1
+            while i>p and nums[p] >= nums[i]:
+                i-=1
+            nums[i], nums[p] = nums[p],nums[i] #将p值和i(从右边开始第一个大于p的值)两个值互相转换
+        l, r = p+1, n-1
+        while l < r: #把整个p后面的值翻转
+            nums[l], nums[r] = nums[r], nums[l]
+            l+=1
+            r-=1
+class Solution:
+    def nextPermutation(self, nums: List[int]) -> None:
+        # 1. 用for从后往前遍历,找到波峰的左边index
+        # 2. 如果为-1,则直接reverse全部
+        # 3. 找到波峰右边第一个比它大的数字,交换
+        # 4. 交换波峰右边所有
+        firstIndex = -1
+        n = len(nums)
+        def reverse(nums, i, j):#翻转从[i,j]的数字
+            while i<j:
+                nums[i], nums[j] = nums[j], nums[i]
+                i+=1
+                j-=1
+        for i in range(n-2, -1, -1):
+            if nums[i] < nums[i+1]:
+                firstIndex = i #不管怎样，first是波峰的左边
+                break #注意break
+        if firstIndex == -1: #不为-1，那firstIndex则为波峰的左边
+            reverse(nums, 0, n-1)
+            return 
+        secondIndex = -1
+        for i in range(n-1, firstIndex, -1):#找到从后往前第一个大于nums[firstIndex]的值
+            if nums[i]>nums[firstIndex]:
+                secondIndex = i 
+                break 
+        nums[firstIndex], nums[secondIndex] = nums[secondIndex], nums[firstIndex]
+        reverse(nums, firstIndex+1, n-1)
+```
+
+
+
