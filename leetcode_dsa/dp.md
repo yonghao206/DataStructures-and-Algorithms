@@ -84,8 +84,29 @@ There are two ways to reach the bottom-right corner:
 
 Language: **Python3**
 
-```text
-​
+```python
+​class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        if not m or not n:
+            return 0
+        # 第一排和第一列为1
+        d = [[1]*n for i in range(m)]
+        d[0][0] = 1
+        for i in range(1,m):
+            for j in range(1,n):
+                d[i][j] = d[i-1][j] + d[i][j-1]
+        return d[m-1][n-1]
+
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        d = [[0]*(n+1) for _ in range(m+1)]
+        d[1][1] = 1
+        for i in range(1, m+1):
+            for j in range(1,n+1):
+                if i==1  and j == 1:
+                    continue
+                d[i][j] = d[i-1][j]+d[i][j-1]
+        return d[m][n]
 ```
 
 ### [63. Unique Paths II](https://leetcode-cn.com/problems/unique-paths-ii/)
@@ -125,11 +146,70 @@ There are two ways to reach the bottom-right corner:
 
 Language: **Python3**
 
-```text
+```python
 ​
+class Solution:
+    def uniquePathsWithObstacles(self, g: List[List[int]]) -> int:
+        if not g or not g[0]: return 0 
+        n, m = len(g), len(g[0])
+        d = [[0]*(m+1) for _ in range(n+1)]
+        if g[0][0] == 1:
+            return 0
+        else:
+            d[1][1] = 1
+        for i in range(1,n+1):
+            for j in range(1,m+1):
+                if i == 1 and j == 1:
+                    continue 
+                if g[i-1][j-1] == 1:
+                    d[i][j] = 0
+                else:
+                    d[i][j] = d[i-1][j] + d[i][j-1]
+        return d[n][m]
+        
+class Solution:
+    def uniquePathsWithObstacles(self, g: List[List[int]]) -> int:
+        n, m = len(g), len(g[0])
+        d = [[0]*m for _ in range(n)]
+        if g[0][0]:
+            return 0
+        else:
+            d[0][0] = 1
+        for i in range(n):
+            for j in range(m):
+                if g[i][j]:
+                    continue 
+                else:
+                    if i>0:
+                        d[i][j] += d[i-1][j]
+                    if j>0:
+                        d[i][j] += d[i][j-1]
+        return d[n-1][m-1]
 ```
 
+### 118 119 120三角形
 
+```python
+class Solution:
+    def generate(self, numRows: int) -> List[List[int]]:
+        res = [[1]*(i+1) for i in range(numRows)]
+        # res[i][j] = res[i-1][j-1] + res[i-1][j]
+        for i in range(2, numRows):
+            for j in range(1, i):
+                res[i][j] = res[i-1][j-1] + res[i-1][j]
+        return res 
+        
+class Solution:
+    def getRow(self, rowIndex: int) -> List[int]:
+        res = [0]*(rowIndex+1)
+        for i in range(0, rowIndex+1):
+            res[i] = 1 # 填充最后一个位置，并且从后往前遍历
+            # 因为当前值由上一层的值对应位置和上一层的前一个值对应的
+            for j in range(i-1,0,-1):
+                res[j] = res[j-1]+res[j]
+        return res 
+
+```
 
 ### [120. Triangle](https://leetcode-cn.com/problems/triangle/)
 
@@ -158,8 +238,42 @@ Bonus point if you are able to do this using only _O_\(_n_\) extra space, where 
 
 Language: **Python3**
 
-```text
-​
+```python
+​class Solution:
+    def minimumTotal(self, nums: List[List[int]]) -> int:
+        if not nums or not nums[0]: return 0 
+        n = len(nums)
+        f = [[0]*n for _ in range(2)]
+        # f[0][0] = nums[0][0] 自己开辟的空间，不需要
+        # 如果在nums上面改，可以从range(1,n)开始
+        # f[i][j] = nums[i][j] + min(f[i-1][j], f[i-1][j-1])
+        # if j>0 if j<i
+        for i in range(n):
+            for j in range(i+1):
+                if j>0 and j<i:
+                    f[i&1][j] = nums[i][j] + min(f[i-1&1][j], f[i-1&1][j-1])
+                elif j == 0:
+                    f[i&1][j] = nums[i][j] + f[i-1&1][j]
+                else:
+                    f[i&1][j] = nums[i][j] + f[i-1&1][j-1]
+        return min(f[n-1&1])
+
+# 用S:O(n)的最聪明的方法，只需要直接加一个&1
+class Solution:
+    def minimumTotal(self, nums: List[List[int]]) -> int:
+        n = len(nums)
+        f = [[0]*n for i in range(2)]
+        f[0][0] = nums[0][0]
+        for i in  range(1,n):
+            for j in range(i+1):
+                if j == 0:
+                    f[i&1][j] = f[i-1&1][j] + nums[i][j]
+                elif j == i:
+                    f[i&1][j] = f[i-1&1][j-1]+nums[i][j]
+                else:
+                    f[i&1][j] = min(f[i-1&1][j],f[i-1&1][j-1])+nums[i][j]
+        # print(f)
+        return min(f[n-1&1])
 ```
 
 ### [121. 买卖股票的最佳时机](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/)
@@ -397,6 +511,8 @@ class Solution:
 ```
 
 ## 背包问题
+
+![](../.gitbook/assets/image%20%285%29.png)
 
 ### [322. 零钱兑换](https://leetcode-cn.com/problems/coin-change/)
 

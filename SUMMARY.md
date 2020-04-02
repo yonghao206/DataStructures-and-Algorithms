@@ -21,7 +21,7 @@
 * [BFS](leetcode_dsa/bfs.md)
 * [DFS/Backtracking](leetcode_dsa/bfs-dfs.md)
 * [DP](leetcode_dsa/dp.md)
-* [模拟题](leetcode_dsa/mo-ni-ti.md)
+* [Simulation](leetcode_dsa/mo-ni-ti.md)
 * [Java\_keyConcept](leetcode_dsa/java_knowledgepoints.md)
 * [Python\_keyConcept](leetcode_dsa/python_keyconcept.md)
 
