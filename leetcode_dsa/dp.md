@@ -1,6 +1,166 @@
 # DP
 
-## DP
+## 
+
+### [62. Unique Paths](https://leetcode-cn.com/problems/unique-paths/)
+
+Difficulty: **中等**
+
+A robot is located at the top-left corner of a _m_ x _n_ grid \(marked 'Start' in the diagram below\).
+
+The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid \(marked 'Finish' in the diagram below\).
+
+How many possible unique paths are there?
+
+![](https://assets.leetcode.com/uploads/2018/10/22/robot_maze.png)  
+Above is a 7 x 3 grid. How many possible unique paths are there?
+
+**Example 1:**
+
+```text
+Input: m = 3, n = 2
+Output: 3
+Explanation:
+From the top-left corner, there are a total of 3 ways to reach the bottom-right corner:
+1\. Right -> Right -> Down
+2\. Right -> Down -> Right
+3\. Down -> Right -> Right
+```
+
+**Example 2:**
+
+```text
+Input: m = 7, n = 3
+Output: 28
+```
+
+**Constraints:**
+
+* `1 <= m, n <= 100`
+* It's guaranteed that the answer will be less than or equal to `2 * 10 ^ 9`.
+
+**Solution**
+
+Language: **Python3**
+
+```text
+​
+```
+
+### [63. Unique Paths II](https://leetcode-cn.com/problems/unique-paths-ii/)
+
+Difficulty: **中等**
+
+A robot is located at the top-left corner of a _m_ x _n_ grid \(marked 'Start' in the diagram below\).
+
+The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid \(marked 'Finish' in the diagram below\).
+
+Now consider if some obstacles are added to the grids. How many unique paths would there be?
+
+![](https://assets.leetcode.com/uploads/2018/10/22/robot_maze.png)
+
+An obstacle and empty space is marked as `1` and `0` respectively in the grid.
+
+**Note:** _m_ and _n_ will be at most 100.
+
+**Example 1:**
+
+```text
+Input:
+[
+  [0,0,0],
+  [0,1,0],
+  [0,0,0]
+]
+Output: 2
+Explanation:
+There is one obstacle in the middle of the 3x3 grid above.
+There are two ways to reach the bottom-right corner:
+1\. Right -> Right -> Down -> Down
+2\. Down -> Down -> Right -> Right
+```
+
+**Solution**
+
+Language: **Python3**
+
+```text
+​
+```
+
+### [63. Unique Paths II](https://leetcode-cn.com/problems/unique-paths-ii/)
+
+Difficulty: **中等**
+
+A robot is located at the top-left corner of a _m_ x _n_ grid \(marked 'Start' in the diagram below\).
+
+The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid \(marked 'Finish' in the diagram below\).
+
+Now consider if some obstacles are added to the grids. How many unique paths would there be?
+
+![](https://assets.leetcode.com/uploads/2018/10/22/robot_maze.png)
+
+An obstacle and empty space is marked as `1` and `0` respectively in the grid.
+
+**Note:** _m_ and _n_ will be at most 100.
+
+**Example 1:**
+
+```text
+Input:
+[
+  [0,0,0],
+  [0,1,0],
+  [0,0,0]
+]
+Output: 2
+Explanation:
+There is one obstacle in the middle of the 3x3 grid above.
+There are two ways to reach the bottom-right corner:
+1\. Right -> Right -> Down -> Down
+2\. Down -> Down -> Right -> Right
+```
+
+**Solution**
+
+Language: **Python3**
+
+```text
+​
+```
+
+
+
+### [120. Triangle](https://leetcode-cn.com/problems/triangle/)
+
+Difficulty: **中等**
+
+Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.
+
+For example, given the following triangle
+
+```text
+[
+     [2],
+    [3,4],
+   [6,5,7],
+  [4,1,8,3]
+]
+```
+
+The minimum path sum from top to bottom is `11` \(i.e., **2** + **3** + **5** + **1** = 11\).
+
+**Note:**
+
+Bonus point if you are able to do this using only _O_\(_n_\) extra space, where _n_ is the total number of rows in the triangle.
+
+**Solution**
+
+Language: **Python3**
+
+```text
+​
+```
 
 ### [121. 买卖股票的最佳时机](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/)
 
@@ -125,6 +285,118 @@ class Solution: #可以用贪心的也可以用dp来做
         # print(d)
         return d[-1][0]
 ```
+
+### [139. Word Break](https://leetcode-cn.com/problems/word-break/)
+
+Difficulty: **中等**
+
+Given a **non-empty** string _s_ and a dictionary _wordDict_ containing a list of **non-empty** words, determine if _s_ can be segmented into a space-separated sequence of one or more dictionary words.
+
+**Note:**
+
+* The same word in the dictionary may be reused multiple times in the segmentation.
+* You may assume the dictionary does not contain duplicate words.
+
+**Example 1:**
+
+```text
+Input: s = "leetcode", wordDict = ["leet", "code"]
+Output: true
+Explanation: Return true because "leetcode" can be segmented as "leet code".
+```
+
+**Example 2:**
+
+```text
+Input: s = "applepenapple", wordDict = ["apple", "pen"]
+Output: true
+Explanation: Return true because "applepenapple" can be segmented as "apple pen apple".
+             Note that you are allowed to reuse a dictionary word.
+```
+
+**Example 3:**
+
+```text
+Input: s = "catsandog", wordDict = ["cats", "dog", "sand", "and", "cat"]
+Output: false
+```
+
+**Solution**
+
+Language: **Python3**
+
+```python
+​class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        if not s: return True 
+        n = len(s)
+        d = [False]*(n+1)
+        d[0]=True 
+        w = set(wordDict)
+        lengths = list(map(len, wordDict))
+        for i in range(1, n+1):
+            for length in lengths:
+                if i>=length and d[i-length] and s[i-length:i] in w:
+                    d[i] = True 
+                    break 
+        return d[-1]
+
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        n = len(s)
+        d = [False]*(n+1)
+        d[0] = True # d[i]表示s[0:i-1]符合要求，在s里面[0:-1]为空符合 d[1] 为s[0:0]需要测试了
+        dic = set(wordDict)
+        for i in range(1, n+1):
+            for j in  range(i):
+                # d[j]表示前j个字符已经拆分成功
+                if d[j] and s[j:i] in dic:
+                    d[i] = True
+                    break
+        return d[n]
+
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        dic = {}
+        self.memo = {}
+        for word in wordDict:
+            dic[word] = True 
+        return self.dfs(s, dic)
+    def dfs(self, s, dic) -> bool:
+        if not s:return True 
+        if s in self.memo:
+            return self.memo[s]
+        for i in range(1,len(s)+1):
+            if s[:i] in dic and self.dfs(s[i:], dic):
+                self.memo[s] = True 
+                return True 
+        self.memo[s] = False 
+        return False
+
+
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        dic = {}
+        for word in wordDict:
+            dic[word] = True 
+        self.memo = {}
+        self.dfs(s, dic)
+        return self.memo[s]
+
+    def dfs(self, s, dic):
+        if not s: return True 
+        if s in self.memo:
+            return self.memo[s]
+        for i in range(len(s)):
+            # 5: 0,1,2,3,4
+            if s[:i+1] in dic and self.dfs(s[i+1:], dic):
+                self.memo[s] = True 
+                return True 
+        self.memo[s] = False 
+        return False
+```
+
+## 背包问题
 
 ### [322. 零钱兑换](https://leetcode-cn.com/problems/coin-change/)
 
