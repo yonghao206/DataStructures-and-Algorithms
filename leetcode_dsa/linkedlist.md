@@ -1,6 +1,20 @@
 # LinkedList
 
+### findMid
 
+```text
+def findMid(self, head: ListNode) -> ListNode:
+    if not head or not head.next :return head 
+    slow, fast = head, head.next 
+    # 1,2, 3, 4; 2
+    # 1,2,3,4,5; 3
+
+    while fast.next and fast.next.next:
+        fast = fast.next.next 
+        slow = slow.next 
+    mid = slow.next 
+    slow.next = None 
+```
 
 ### [2. Add Two Numbers](https://leetcode-cn.com/problems/add-two-numbers/)
 
