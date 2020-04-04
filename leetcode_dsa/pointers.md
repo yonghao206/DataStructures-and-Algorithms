@@ -102,6 +102,52 @@ Language: **Java**
 
 
 
+### [42. Trapping Rain Water](https://leetcode-cn.com/problems/trapping-rain-water/)
+
+Difficulty: **困难**
+
+Given _n_ non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.
+
+![](https://assets.leetcode.com/uploads/2018/10/22/rainwatertrap.png)  
+The above elevation map is represented by array \[0,1,0,2,1,0,1,3,2,1,2,1\]. In this case, 6 units of rain water \(blue section\) are being trapped. **Thanks Marcos** for contributing this image!
+
+**Example:**
+
+```text
+Input: [0,1,0,2,1,0,1,3,2,1,2,1]
+Output: 6
+```
+
+**Solution**
+
+Language: **Python3**
+
+```text
+​class Solution: #O(n)
+    def trap(self, height: List[int]) -> int:
+        if not height: return 0
+        n = len(height)
+        peak_index = 0
+        water = 0
+        for i in range(n):
+            if height[i] > height[peak_index]:
+                peak_index = i
+        leftMost = 0 # 从左边开始数，扫描到的最高的点，它决定了左边的挡板高度，如果遇到后面的index没有他高，返回插值即为当前水位，如果比它高，则替换leftMost
+        # 用leftmost和i来记录单调递减的地方；用peak_index把两边分开
+        for i in range(peak_index):
+            if height[i] > height[leftMost]:
+                leftMost = i 
+            elif height[i] < height[leftMost]:
+                water += height[leftMost] - height[i]
+        rightMost = n -1 # 从右边开始数，扫描到的最高的点，它决定了右边的挡板高度，如果遇到前面的index没有他高，返回插值即为当前水位，如果比它高，则替换rightMost
+        for i in range(n-1,peak_index,-1):
+            if height[i] > height[rightMost]:
+                rightMost = i 
+            elif height[i] < height[rightMost]:
+                water += height[rightMost] - height[i]
+        return water
+```
+
 ### [75. Sort Colors](https://leetcode-cn.com/problems/sort-colors/)
 
 Difficulty: **中等**
