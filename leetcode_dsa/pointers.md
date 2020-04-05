@@ -122,7 +122,7 @@ Output: 6
 
 Language: **Python3**
 
-```text
+```python
 ​class Solution: #O(n)
     def trap(self, height: List[int]) -> int:
         if not height: return 0
@@ -146,6 +146,25 @@ Language: **Python3**
             elif height[i] < height[rightMost]:
                 water += height[rightMost] - height[i]
         return water
+        
+# 维护一个递减的单调栈，如果遇到大于栈顶的值，pop出来，然后算一下两边的高度和长度，求解水池的容量
+class Solution: #O(n)
+    def trap(self, height: List[int]) -> int:
+        if not height: return 0
+        res = 0
+        idx = 0
+        stk = []
+        n = len(height)
+        while idx < n:
+            while stk and height[idx] > height[stk[-1]]:
+                top = stk.pop()
+                if not stk:
+                    break 
+                hei = min(height[idx], height[stk[-1]]) - height[top]
+                res += hei*(idx-stk[-1]-1)
+            stk.append(idx)
+            idx+=1
+        return res 
 ```
 
 ### [75. Sort Colors](https://leetcode-cn.com/problems/sort-colors/)
