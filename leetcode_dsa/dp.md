@@ -512,7 +512,7 @@ class Solution:
 
 ## 背包问题
 
-![](../.gitbook/assets/image%20%285%29.png)
+![](../.gitbook/assets/image%20%283%29.png)
 
 ### [322. 零钱兑换](https://leetcode-cn.com/problems/coin-change/)
 

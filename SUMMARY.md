@@ -9,9 +9,12 @@
 
 ## Leetcode\_DSA
 
+* [Data Structure](leetcode_dsa/data-structure.md)
+* [Algorithms](leetcode_dsa/algorithms.md)
 * [Pointers](leetcode_dsa/pointers.md)
 * [Binary Search](leetcode_dsa/binary-search.md)
 * [LinkedList](leetcode_dsa/linkedlist.md)
+* [Design](leetcode_dsa/design.md)
 * [String](leetcode_dsa/string.md)
 * [Math](leetcode_dsa/math.md)
 * [Stack/Queue](leetcode_dsa/stack-queue.md)
