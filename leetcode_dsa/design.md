@@ -44,8 +44,33 @@ cache.get(4);       // returns 4
 
 Language: **Python3**
 
-```text
-​
+```python
+​class LRUCache:
+    def __init__(self, capacity: int):
+        self.remain = capacity
+        self.dic = collections.OrderedDict()
+    # a = [('a', 1), ('b', 2), ('c', 3)]) #正常插入是依次加入左边，pop也是从左边开始，
+    # a.move_to_end('a') # OrderedDict([('b', 2), ('c', 3), ('a', 1)])
+    # a.popitem(last=False) 先pop出来头节点
+    def get(self, key: int) -> int:
+        if key in self.dic:
+            v = self.dic[key]
+            self.dic.move_to_end(key)
+            return v 
+        return -1
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.dic:
+            self.dic.pop(key)
+        else:
+            if self.remain > 0:
+                self.remain -= 1
+            else:
+        '''Remove and return a (key, value) pair from the dictionary.
+        Pairs are returned in LIFO order if last is true or FIFO order if false.
+        '''
+                self.dic.popitem(last=False)
+        self.dic[key] = value 
 ```
 
 
