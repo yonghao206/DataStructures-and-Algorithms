@@ -99,6 +99,202 @@ class Solution:
         return max(min(int(re.findall('^[\+\-]?\d+', s.lstrip())[0]), 2**31 - 1), -2**31)
 ```
 
+### 
+
+### [48. Rotate Image](https://leetcode-cn.com/problems/rotate-image/)
+
+Difficulty: **中等**
+
+You are given an _n_ x _n_ 2D matrix representing an image.
+
+Rotate the image by 90 degrees \(clockwise\).
+
+**Note:**
+
+You have to rotate the image , which means you have to modify the input 2D matrix directly. **DO NOT** allocate another 2D matrix and do the rotation.
+
+**Example 1:**
+
+```text
+Given input matrix = 
+[
+  [1,2,3],
+  [4,5,6],
+  [7,8,9]
+],
+
+rotate the input matrix in-place such that it becomes:
+[
+  [7,4,1],
+  [8,5,2],
+  [9,6,3]
+]
+```
+
+**Example 2:**
+
+```text
+Given input matrix =
+[
+  [ 5, 1, 9,11],
+  [ 2, 4, 8,10],
+  [13, 3, 6, 7],
+  [15,14,12,16]
+], 
+
+rotate the input matrix in-place such that it becomes:
+[
+  [15,13, 2, 5],
+  [14, 3, 4, 1],
+  [12, 6, 8, 9],
+  [16, 7,10,11]
+]
+```
+
+**Solution**
+
+Language: **Python3**
+
+```text
+​class Solution:
+    def rotate(self, matrix: List[List[int]]) -> None:
+        # 先转置矩阵，然后翻转每一行
+        if not matrix or not matrix[0]: return matrix
+        n = len(matrix)
+        for i in range(n):
+            for j in range(i,n): # 沿着对角线进行翻转
+                matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+        for i in range(n): # 沿着中间轴进行翻转
+            for j in range(n//2):
+                matrix[i][j], matrix[i][n-j-1] = matrix[i][n-j-1], matrix[i][j]
+
+class Solution:
+    def rotate(self, matrix: List[List[int]]) -> None:
+        if not matrix or not matrix[0]: return 
+        n = len(matrix)
+        top, left, right, bottom = 0, 0, n-1, n-1
+        i = 0
+        # 外层开始一个个元素进行旋转
+        while n>1:
+            for i in range(n-1):
+                matrix[top][left+i], matrix[top+i][right], matrix[bottom][right-i], matrix[bottom-i][left] \
+         = matrix[bottom-i][left], matrix[top][left+i], matrix[top+i][right], matrix[bottom][right-i]
+
+            top+=1
+            right-=1
+            bottom-=1
+            left+=1
+            n-=2
+
+
+```
+
+### 
+
+### [54. Spiral Matrix](https://leetcode-cn.com/problems/spiral-matrix/)
+
+Difficulty: **中等**
+
+Given a matrix of _m_ x _n_ elements \(_m_ rows, _n_ columns\), return all elements of the matrix in spiral order.
+
+**Example 1:**
+
+```text
+Input:
+[
+ [ 1, 2, 3 ],
+ [ 4, 5, 6 ],
+ [ 7, 8, 9 ]
+]
+Output: [1,2,3,6,9,8,7,4,5]
+```
+
+**Example 2:**
+
+```text
+Input:
+[
+  [1, 2, 3, 4],
+  [5, 6, 7, 8],
+  [9,10,11,12]
+]
+Output: [1,2,3,4,8,12,11,10,9,5,6,7]
+```
+
+**Solution**
+
+Language: **Python3**
+
+```python
+​class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        dirs = [[0, 1], [1, 0], [0,-1], [-1,0]]
+        res = []
+        if not matrix or not matrix[0]: return res 
+        n, m = len(matrix), len(matrix[0])
+        # visited = [[False]*m for _ in range(n)]
+        d = 0
+        x, y = 0, 0
+        for _ in range(n*m):
+            res.append(matrix[x][y])
+            matrix[x][y] = float('inf')
+            newx, newy = x + dirs[d][0], y + dirs[d][1]
+            if newx<0 or newx>=n or newy<0 or newy>=m or matrix[newx][newy]==float('inf'):
+                d = (d+1)%4
+                newx, newy = x + dirs[d][0], y + dirs[d][1]
+            x, y = newx, newy 
+        return res
+```
+
+### 
+
+### [59. Spiral Matrix II](https://leetcode-cn.com/problems/spiral-matrix-ii/)
+
+Difficulty: **中等**
+
+Given a positive integer _n_, generate a square matrix filled with elements from 1 to _n_2 in spiral order.
+
+**Example:**
+
+```text
+Input: 3
+Output:
+[
+ [ 1, 2, 3 ],
+ [ 8, 9, 4 ],
+ [ 7, 6, 5 ]
+]
+```
+
+**Solution**
+
+Language: **Python3**
+
+```text
+​class Solution:
+    def generateMatrix(self, n: int) -> List[List[int]]:
+        if n < 1: return []
+        res = list(range(1,n*n+1))
+        x, y = 0, 0 
+        visited = set()
+        dirs = [[0,1], [1,0], [0,-1], [-1, 0]]
+        d = 0
+        ret = [[0]*n for _ in range(n)]
+        for i in range(n*n):
+            ret[x][y] = res[i]
+            visited.add((x, y))
+            newx, newy = x + dirs[d][0], y+dirs[d][1]
+            if newx <0 or newx >= n or newy <0 or newy >= n or (newx, newy) in visited:
+                d = (d+1)%4
+                newx, newy = x + dirs[d][0], y+dirs[d][1]
+            x, y = newx, newy 
+        return ret 
+
+
+```
+
+### 
+
 ### [56. 合并区间](https://leetcode-cn.com/problems/merge-intervals/)
 
 Difficulty: **中等**
@@ -182,4 +378,68 @@ class Solution {
     }
 }
 ```
+
+## Sort
+
+### quick, merge sort
+
+```python
+class Solution:
+    def sortArray(self, nums: List[int]) -> List[int]:
+        # self.quick_sort(nums, 0, len(nums)-1)
+        self.merge_sort(nums, [0]*len(nums), 0, len(nums)-1)
+        return nums 
+
+    def quick_sort(self, nums, l, r):
+        if l >= r: return 
+        i, j = l-1, r+1
+        x = nums[l]
+        while i < j:
+            while True:
+                i+=1
+                if nums[i] >= x:
+                    break 
+            while True:
+                j-=1
+                if nums[j] <= x:
+                    break 
+            if i < j:
+                nums[i], nums[j] = nums[j], nums[i]
+        self.quick_sort(nums, l, j)
+        self.quick_sort(nums, j+1, r)
+    
+    def merge_sort(self, q, temp , l, r):
+        if l == r: return 
+        mid = l + r>> 1
+        self.merge_sort(q, temp, l, mid)
+        self.merge_sort(q, temp, mid+1, r)
+        k, i, j = 0, l, mid+1
+        while i <= mid and j <= r:
+            if q[i] <= q[j]:
+                temp[k] = q[i]
+                i+=1
+            else:
+                temp[k] = q[j]
+                j+=1
+            k+=1
+        while i <= mid:
+            temp[k] = q[i]
+            i+=1
+            k+=1
+        while j<=r:
+            temp[k] = q[j]
+            k+=1
+            j+=1
+        i, j = l, 0 
+        q[l:r+1] = temp[:r-l+1]
+
+```
+
+### Heap
+
+```python
+
+```
+
+
 
