@@ -1,6 +1,16 @@
 # DP
 
-## 
+## key concepts
+
+top-down with memoization
+
+bottom-up with tabulation
+
+Tabulation is the opposite of the top-down approach and avoids recursion. In this approach, we solve the problem “bottom-up” \(i.e. by solving all the related sub-problems first\). This is typically done by filling up an n-dimensional table. Based on the results in the table, the solution to the top/original problem is then computed.
+
+Tabulation is the opposite of Memoization, as in Memoization we solve the problem and maintain a map of already solved sub-problems. In other words, in memoization, we do it top-down in the sense that we solve the top problem first \(which typically recurses down to solve the sub-problems\).
+
+
 
 ### [62. Unique Paths](https://leetcode-cn.com/problems/unique-paths/)
 
