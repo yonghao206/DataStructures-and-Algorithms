@@ -522,7 +522,230 @@ class Solution:
 
 ## 背包问题
 
+![](../.gitbook/assets/image%20%284%29.png)
+
+1. 上面是完全背包和0-1背包的模板，要熟悉并且理解，心中有图
+2. 
 ![](../.gitbook/assets/image%20%283%29.png)
+
+通过最大值与前一个值比较，如果不相等，说明当前元素被使用，我们能够通过一个for循环了解到到底是使用了哪些元素
+
+```python
+from __future__ import print_function
+
+
+def solve_knapsack(profits, weights, capacity):
+  # basic checks
+  n = len(profits)
+  if capacity <= 0 or n == 0 or len(weights) != n:
+    return 0
+
+  dp = [[0 for x in range(capacity+1)] for y in range(n)]
+
+  # populate the capacity = 0 columns, with '0' capacity we have '0' profit
+  for i in range(0, n):
+    dp[i][0] = 0
+
+  # if we have only one weight, we will take it if it is not more than the capacity
+  for c in range(0, capacity+1):
+    if weights[0] <= c:
+      dp[0][c] = profits[0]
+
+  # process all sub-arrays for all the capacities
+  for i in range(1, n):
+    for c in range(1, capacity+1):
+      profit1, profit2 = 0, 0
+      # include the item, if it is not more than the capacity
+      if weights[i] <= c:
+        profit1 = profits[i] + dp[i - 1][c - weights[i]]
+      # exclude the item
+      profit2 = dp[i - 1][c]
+      # take maximum
+      dp[i][c] = max(profit1, profit2)
+
+  print_selected_elements(dp, weights, profits, capacity)
+  # maximum profit will be at the bottom-right corner.
+  return dp[n - 1][capacity]
+
+# 打印具体的包括的item
+def print_selected_elements(dp, weights, profits, capacity):
+  print("Selected weights are: ", end='')
+  n = len(weights)
+  totalProfit = dp[n-1][capacity]
+  for i in range(n-1, 0, -1):
+    if totalProfit != dp[i - 1][capacity]:
+      print(str(weights[i]) + " ", end='')
+      capacity -= weights[i]
+      totalProfit -= profits[i]
+
+  if totalProfit != 0:
+    print(str(weights[0]) + " ", end='')
+  print()
+
+
+def main():
+  print("Total knapsack profit: " +
+        str(solve_knapsack([1, 6, 10, 16], [1, 2, 3, 5], 7)))
+  print("Total knapsack profit: " +
+        str(solve_knapsack([1, 6, 10, 16], [1, 2, 3, 5], 6)))
+
+
+main()
+
+# 0-1空间优化
+def solve_knapsack(profits, weights, capacity):
+  # TODO: Write - Your - Code
+  # return -1;
+  n = len(profits)
+  d = [0]*(capacity+1)
+  for i in range(n):
+    for j in range(capacity, weights[i]-1, -1):
+      d[j] = max(d[j], profits[i] + d[j-weights[i]])
+  return d[-1]
+
+
+```
+
+
+
+
+
+### [416. Partition Equal Subset Sum](https://leetcode-cn.com/problems/partition-equal-subset-sum/)
+
+Difficulty: **中等**
+
+Given a **non-empty** array containing **only positive integers**, find if the array can be partitioned into two subsets such that the sum of elements in both subsets is equal.
+
+**Note:**
+
+1. Each of the array element will not exceed 100.
+2. The array size will not exceed 200.
+
+**Example 1:**
+
+```text
+Input: [1, 5, 11, 5]
+
+Output: true
+
+Explanation: The array can be partitioned as [1, 5, 5] and [11].
+```
+
+**Example 2:**
+
+```text
+Input: [1, 2, 3, 5]
+
+Output: false
+
+Explanation: The array cannot be partitioned into equal sum subsets.
+```
+
+**Solution**
+
+Language: **Python3**
+
+```python
+​class Solution: # O(n*sum/2) 100万可以在1s内完成计算
+    def canPartition(self, nums: List[int]) -> bool:
+        if not nums: return False 
+        total = sum(nums)
+        if total%2 == 1: return False 
+        n = total//2
+        # 前i个元素是否可以填满这个背包容量[0,n]
+        # =》是否所有的元素能够填充一半的sum，能，则另外一半也等于sum
+        memo = [False]*(n+1)
+        # 这里相当于我们把第一层的值先赋上
+        for i in range(n+1):
+            memo[i] = (nums[0] == i) 
+        for i in range(1, len(nums)):
+            for j in range(n, nums[i]-1, -1):
+                memo[j] =( memo[j] or memo[j-nums[i]])
+        print(memo)
+        return memo[n]
+
+
+class Solution: # O(n*sum/2) 100万可以在1s内完成计算
+    def canPartition(self, nums: List[int]) -> bool:
+        if not nums: return False 
+        total = sum(nums)
+        if total % 2: return False 
+        C = total//2
+    
+        self.memo = [[-1]*(C+1) for _ in range(len(nums))]
+        return bool(self.best(nums, C, len(nums)-1)) #前index的和能够等于C
+
+    # memo[i][c]表示使用索引[0...i]是否可以填充容量为c的背包，没有计算表示-1; 0表示不可以填充; 1表示可以填充
+    def best(self, nums, c, index):
+        if c == 0: return True 
+        if c < 0 or index < 0: return False 
+        if self.memo[index][c]!=-1:
+            return self.memo[index][c]
+        res = self.best(nums, c, index-1) or self.best(nums, c-nums[index], index-1)
+        self.memo[index][c] = res 
+        return res 
+
+```
+
+
+
+### [494. Target Sum](https://leetcode-cn.com/problems/target-sum/)
+
+Difficulty: **中等**
+
+You are given a list of non-negative integers, a1, a2, ..., an, and a target, S. Now you have 2 symbols `+` and `-`. For each integer, you should choose one from `+` and `-` as its new symbol.
+
+Find out how many ways to assign symbols to make sum of integers equal to target S.
+
+**Example 1:**
+
+```text
+Input: nums is [1, 1, 1, 1, 1], S is 3\. 
+Output: 5
+Explanation: 
+
+-1+1+1+1+1 = 3
++1-1+1+1+1 = 3
++1+1-1+1+1 = 3
++1+1+1-1+1 = 3
++1+1+1+1-1 = 3
+
+There are 5 ways to assign symbols to make the sum of nums be target 3.
+```
+
+**Note:**
+
+1. The length of the given array is positive and will not exceed 20.
+2. The sum of elements in the given array will not exceed 1000.
+3. Your output answer is guaranteed to be fitted in a 32-bit integer.
+
+**Solution**
+
+Language: **Python3**
+
+```python
+​class Solution:
+    def findTargetSumWays(self, nums: List[int], S: int) -> int:
+        # dfs 2^n
+        if not nums: return 0
+        self.res = 0
+        self.S = S 
+        self.d = {}
+        return self.dfs(nums, 0, 0)
+ 
+    def dfs(self, nums, index, total):
+        if (index, total) in self.d:
+            return self.d[(index,total)]
+        if index == len(nums):
+            if total == self.S:
+                return 1 
+            return 0
+        res = 0
+        res += self.dfs(nums, index+1, total+nums[index])
+        res += self.dfs(nums, index+1, total-nums[index])
+        self.d[(index, total)] = res 
+        return res 
+```
 
 ### [322. 零钱兑换](https://leetcode-cn.com/problems/coin-change/)
 
