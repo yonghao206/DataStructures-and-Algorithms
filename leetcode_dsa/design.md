@@ -8,7 +8,7 @@ Difficulty: **中等**
 
 \*\*\*\*
 
-![](../.gitbook/assets/image%20%2812%29.png)
+![](../.gitbook/assets/image%20%2814%29.png)
 
 ![](../.gitbook/assets/image%20%281%29.png)
 
@@ -83,7 +83,7 @@ Language: **Python3**
 
 Difficulty: **困难**
 
-![](../.gitbook/assets/image%20%288%29.png)
+![](../.gitbook/assets/image%20%2810%29.png)
 
 Design and implement a data structure for cache. It should support the following operations: `get` and `put`.
 
